@@ -1,25 +1,76 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import path from "path";
+import fs from "fs";
+import { validateProblemNumberInput } from "./boj/utils/validateInput";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "boj-starter-kit" is now active!');
+  // createFile 명령어 등록
+  context.subscriptions.push(
+    vscode.commands.registerCommand("boj-starter-kit.setupProblem", async () => {
+      let problemNumber = await vscode.window.showInputBox({
+        prompt: "문제 번호",
+        validateInput: validateProblemNumberInput,
+      });
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand("boj-starter-kit.helloWorld", () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage("Hello World from BOJ-Starter-Kit!");
-  });
+      // 문제 번호가 입력되지 않은 경우
+      if (!problemNumber) {
+        vscode.window.showInformationMessage("문제 번호가 입력 되지 않았습니다.");
+        return;
+      }
 
-  context.subscriptions.push(disposable);
+      problemNumber = problemNumber.trim();
+
+      // 현재 workspace 폴더
+      const workspaceFolders = vscode.workspace.workspaceFolders;
+
+      if (!workspaceFolders) {
+        vscode.window.showInformationMessage("먼저 폴더를 열어주세요.");
+        return;
+      }
+
+      const folderPath = workspaceFolders[0].uri.fsPath;
+      const fileName = `${problemNumber}.js`;
+      const filePath = path.join(folderPath, fileName);
+      const inputFilePath = path.join(folderPath, "input.txt");
+
+      // 이미 파일이 존재하는 경우
+      if (fs.existsSync(filePath)) {
+        vscode.window.showErrorMessage("파일이 이미 존재합니다. 다른 문제 번호를 입력해주세요.");
+        return;
+      }
+
+      // js input boilerplate
+      const content = `// [${problemNumber}](https://www.acmicpc.net/problem/${problemNumber})
+
+const fs = require("fs");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+let input = fs.readFileSync(filePath).toString().trim().split("\\n");
+`;
+
+      // 생성한 파일에 js boilerplate 작성하여 열기
+      fs.writeFile(filePath, content, async (err) => {
+        if (err) {
+          vscode.window.showErrorMessage("파일 생성에 실패하였습니다.");
+          console.error(err);
+        }
+
+        const doc = await vscode.workspace.openTextDocument(filePath);
+
+        vscode.window.showTextDocument(doc);
+        vscode.window.showInformationMessage(`${fileName} 파일이 생성되었습니다.`);
+      });
+
+      // input.txt가 루트에 없는 경우 생성
+      if (!fs.existsSync(inputFilePath)) {
+        fs.writeFile(inputFilePath, "", (error) => {
+          if (error) {
+            vscode.window.showErrorMessage("input.txt 파일 생성에 실패하였습니다.");
+            return;
+          }
+        });
+      }
+    })
+  );
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
