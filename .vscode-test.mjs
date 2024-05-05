@@ -1,5 +1,11 @@
-import { defineConfig } from '@vscode/test-cli';
+import { defineConfig } from "@vscode/test-cli";
 
 export default defineConfig({
-	files: 'out/test/**/*.test.js',
+  label: "SetupProblemTest",
+  files: "out/test/**/*.test.js",
+  workspaceFolder: "./src/test/testFixtures/testWorkspace",
+  mocha: {
+    ui: "bdd",
+    timeout: 20000,
+  },
 });
