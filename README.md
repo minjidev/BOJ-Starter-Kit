@@ -1,71 +1,31 @@
-# boj-starter-kit README
+# BOJ StarterKit
 
-This is the README for your extension "boj-starter-kit". After writing up a brief description, we recommend including the following sections.
+이 확장 프로그램은 지정된 BOJ 문제 번호에 대해 JavaScript 템플릿 파일을 자동으로 생성하여 사용자가 환경 설정보다 문제 해결에 집중할 수 있도록 도와줍니다.
 
-## Features
+## 사용 방법
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+![boj-setup](https://github.com/minjidev/BOJ-Starter-Kit/assets/68722909/42baa7b4-28ac-491e-8092-257898577980)
 
-For example if there is an image subfolder under your extension project workspace:
+1. `Ctrl+Shift+P` 또는 macOS에서 `Cmd+Shift+P`를 눌러 명령 팔레트를 엽니다.
+2. `BOJ StarterKit: Setup Problem`을 입력하고 Enter를 누릅니다.
+3. 풀이 할 문제 번호를 입력합니다.
 
-\!\[feature X\]\(images/feature-x.png\)
+루트 폴더에 `<problem_number>.js`라는 이름의 새 파일이 생성되며 문제를 풀기 위한 필요한 템플릿이 포함됩니다.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## 기능
 
-## Requirements
+- **문제 파일 생성**: 지정된 BOJ 문제 번호에 대해 자바스크립트 파일을 자동으로 생성합니다.
+- **입력 템플릿**: 문제 입력을 로드하는 기본 템플릿 및 문제 링크를 포함합니다.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 필요 사항
 
-## Extension Settings
+- Visual Studio Code ^1.89.0
+- Node.js ^16.0.0
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 지원
 
-For example:
+BOJ StarterKit 사용 중 문제가 발생하거나 개선 사항이 있으면 [GitHub 리포지토리](https://github.com/minjidev?tab=repositories)에 이슈를 제출해 주세요.
 
-This extension contributes the following settings:
+## 라이선스
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT 라이선스
