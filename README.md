@@ -4,7 +4,7 @@
 
 ## 사용 방법
 
-![boj-setup](https://github.com/minjidev/BOJ-Starter-Kit/assets/68722909/42baa7b4-28ac-491e-8092-257898577980)
+![boj-setup](https://github.com/minjidev/BOJ-Starter-Kit/assets/68722909/ea870bc6-0757-4826-a662-4282a0c64e0f)
 
 1. `Ctrl+Shift+P` 또는 macOS에서 `Cmd+Shift+P`를 눌러 명령 팔레트를 엽니다.
 2. `BOJ StarterKit: Setup Problem`을 입력하고 Enter를 누릅니다.
