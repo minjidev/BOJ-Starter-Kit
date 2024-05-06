@@ -2,6 +2,8 @@
 
 이 확장 프로그램은 지정된 BOJ 문제 번호에 대해 JavaScript 템플릿 파일을 자동으로 생성하여 사용자가 환경 설정보다 문제 해결에 집중할 수 있도록 도와줍니다.
 
+**[Marketplace에서 다운로드](https://marketplace.visualstudio.com/items?itemName=minjidev.boj-starter-kit)**
+
 ## 사용 방법
 
 ![boj-setup](https://github.com/minjidev/BOJ-Starter-Kit/assets/68722909/ea870bc6-0757-4826-a662-4282a0c64e0f)
@@ -28,4 +30,4 @@ BOJ StarterKit 사용 중 문제가 발생하거나 개선 사항이 있으면 [
 
 ## 라이선스
 
-MIT 라이선스
+[MIT 라이선스](https://github.com/minjidev/BOJ-Starter-Kit/blob/main/LICENSE)
