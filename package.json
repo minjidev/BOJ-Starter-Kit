@@ -25,7 +25,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./dist/extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -36,9 +36,9 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run esbuild-base --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-    "esbuild": "pnpm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "pnpm run esbuild-base -- --sourcemap --watch",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "pnpm run esbuild-base --sourcemap",
+    "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
@@ -63,8 +63,9 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@vscode/vsce": "^2.26.1",
     "axios": "^1.6.8",
-    "g": "^2.0.1",
-    "vsce": "^2.15.0"
+    "cheerio": "1.0.0-rc.12",
+    "g": "^2.0.1"
   }
 }
