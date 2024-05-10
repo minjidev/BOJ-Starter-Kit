@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import path from "path";
 import fs from "fs";
-import { validateProblemNumberInput } from "./boj/utils/validateInput";
+import { validateProblemNumberInput, fetchProblemInfo, createInputTemplate } from "./boj/utils/index";
 
 export function activate(context: vscode.ExtensionContext) {
   // createFile 명령어 등록
@@ -19,12 +19,21 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       problemNumber = problemNumber.trim();
+      let title = "";
+
+      // 문제 존재하는지 확인하고 제목 가져오기
+      try {
+        title = await fetchProblemInfo(problemNumber);
+      } catch (err) {
+        vscode.window.showErrorMessage("존재하지 않는 문제입니다. 올바른 문제 번호를 입력해주세요.");
+        return;
+      }
 
       // 현재 workspace 폴더
       const workspaceFolders = vscode.workspace.workspaceFolders;
 
       if (!workspaceFolders) {
-        vscode.window.showInformationMessage("먼저 폴더를 열어주세요.");
+        vscode.window.showErrorMessage("먼저 폴더를 열어주세요.");
         return;
       }
 
@@ -40,18 +49,14 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       // js input boilerplate
-      const content = `// [${problemNumber}](https://www.acmicpc.net/problem/${problemNumber})
-
-const fs = require("fs");
-const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
-let input = fs.readFileSync(filePath).toString().trim().split("\\n");
-`;
+      const template = createInputTemplate({ id: problemNumber, title });
 
       // 생성한 파일에 js boilerplate 작성하여 열기
-      fs.writeFile(filePath, content, async (err) => {
+      fs.writeFile(filePath, template, async (err) => {
         if (err) {
           vscode.window.showErrorMessage("파일 생성에 실패하였습니다.");
           console.error(err);
+          return;
         }
 
         const doc = await vscode.workspace.openTextDocument(filePath);
@@ -62,8 +67,8 @@ let input = fs.readFileSync(filePath).toString().trim().split("\\n");
 
       // input.txt가 루트에 없는 경우 생성
       if (!fs.existsSync(inputFilePath)) {
-        fs.writeFile(inputFilePath, "", (error) => {
-          if (error) {
+        fs.writeFile(inputFilePath, "", (err) => {
+          if (err) {
             vscode.window.showErrorMessage("input.txt 파일 생성에 실패하였습니다.");
             return;
           }
